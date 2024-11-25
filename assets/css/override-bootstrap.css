@@ -113,3 +113,13 @@ h3 {
 form i {
   color: var(--primary);
 }
+
+.form-signin {
+  max-width: 430px;
+  padding: 1rem;
+}
+
+.form-listing {
+  max-width: 700px;
+  padding: 1rem;
+}
