@@ -1,5 +1,23 @@
 <?php
+require_once "libs/pdo.php";
+require_once "libs/user.php";
 require_once "templates/header.php";
+
+$error = null;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $user = verifyUserLoginPassword($pdo, $_POST["email"], $_POST["password"]);
+    if ($user) {
+        session_regenerate_id(true);
+        $_SESSION["user"] = [
+            "id" => $user["id"],
+            "username" => $user["username"]
+        ];
+        header("Location: index.php");
+    } else {
+        $error = "Email ou mot de passe incorrect";
+    }
+}
 
 ?>
 
@@ -15,6 +33,11 @@ require_once "templates/header.php";
             <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Mot de passe</label>
         </div>
+        <?php if ($error): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= $error ?>
+            </div>
+        <?php endif; ?>
         <button class="btn btn-primary w-100 py-2" type="submit">Connexion</button>
 
     </form>

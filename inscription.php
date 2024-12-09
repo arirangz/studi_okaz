@@ -5,11 +5,10 @@ require_once "libs/user.php";
 
 $errors = [];
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    //@todo ajouter la verif sur tous les champs
     $verif = verifyUser($_POST);
     if ($verif === true) {
         $resAdd = addUser($pdo, $_POST["username"], $_POST["email"], $_POST["password"]);
-        //@todo rediriger vers login
+        header("Location: login.php");
     } else {
         $errors = $verif;
     }
@@ -34,10 +33,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="mb-3">
             <label class="form-label" for="email">Email</label>
             <input class="form-control" type="email" name="email" id="email">
+            <?php if (isset($errors["email"])) { ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $errors["email"] ?>
+                </div>
+            <?php } ?>
         </div>
         <div class="mb-3">
             <label class="form-label" for="password">Mot de passe</label>
             <input class="form-control" type="password" name="password" id="password">
+            <?php if (isset($errors["password"])) { ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $errors["password"] ?>
+                </div>
+            <?php } ?>
         </div>
         <input class="btn btn-primary" type="submit" value="Enregistrer" name="add_user">
     </form>
