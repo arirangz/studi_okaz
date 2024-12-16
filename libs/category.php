@@ -1,10 +1,9 @@
 <?php
 
-function getCategories()
+function getCategories(PDO $pdo)
 {
-    return [
-        ["name" => "Jeux vidéos", "icon" => "controller"],
-        ["name" => "Meubles", "icon" => "lamp"],
-        ["name" => "Vêtements", "icon" => "tag"],
-    ];
+    $sql = "SELECT * FROM category";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    return $query->fetchAll(PDO::FETCH_ASSOC);
 }
