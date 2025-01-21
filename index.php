@@ -6,7 +6,7 @@ require_once 'libs/category.php';
 
 $listings = getListings($pdo);
 
-$categories = getCategories();
+$categories = getCategories($pdo);
 
 ?>
 

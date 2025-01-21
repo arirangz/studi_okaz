@@ -17,7 +17,7 @@ function getListings(PDO $pdo, array $filters = []): array
     if (isset($filters["max_price"])) {
         $conditions[] = "price <= :max_price";
     }
-    if (isset($filters["category"])) {
+    if (isset($filters["category"]) && $filters["category"]) {
         $conditions[] = "category_id = :category";
     }
     $where = $conditions ? " WHERE " . implode(" AND ", $conditions) : "";
@@ -36,7 +36,7 @@ function getListings(PDO $pdo, array $filters = []): array
     if (isset($filters["max_price"])) {
         $query->bindValue(":max_price", $filters["max_price"]);
     }
-    if (isset($filters["category"])) {
+    if (isset($filters["category"]) && $filters["category"]) {
         $query->bindValue(":category", $filters["category"], PDO::PARAM_INT);
     }
     $query->execute();

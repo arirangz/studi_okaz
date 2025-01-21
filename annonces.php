@@ -54,9 +54,9 @@ $categories = getCategories($pdo);
             <div class="p-3 border-bottom">
                 <label for="category">Catégorie</label>
                 <select name="category" id="category" class="form-select">
-                    <option disabled value> -- catégorie -- </option>
+                    <option value> -- catégorie -- </option>
                     <?php foreach ($categories as $category): ?>
-                        <option value="<?= $category["id"] ?>" <?php if ($category["id"] == $_GET["category"]) {
+                        <option value="<?= $category["id"] ?>" <?php if (isset($_GET["category"]) && $category["id"] == $_GET["category"]) {
                                                                     echo 'selected="selected"';
                                                                 } ?>><?= $category["name"] ?></option>
                     <?php endforeach; ?>
