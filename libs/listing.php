@@ -1,6 +1,6 @@
 <?php
 
-function getListings(PDO $pdo, array $filters = []): array
+function getListings(PDO $pdo, array $filters = [], int $limit = null): array
 {
     $orderBy = "listing.id DESC";
     $relevance = "";
@@ -20,11 +20,17 @@ function getListings(PDO $pdo, array $filters = []): array
     if (isset($filters["category"]) && $filters["category"]) {
         $conditions[] = "category_id = :category";
     }
+    $limitQuery = "";
+    if ($limit) {
+        $limitQuery = " LIMIT $limit";
+
+    }
     $where = $conditions ? " WHERE " . implode(" AND ", $conditions) : "";
     $sql = "SELECT listing.id, listing.title, listing.description, listing.image, listing.price
             $relevance
             FROM listing
-            $where";
+            $where
+            $limitQuery";
 
     $query = $pdo->prepare($sql);
     if (isset($filters["search"])) {
